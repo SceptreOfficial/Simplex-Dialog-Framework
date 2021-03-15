@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="SDF">
+	<Key ID="STR_SDF_CONFIRM">
+		<English>CONFIRM</English>
+		<French>VALIDER</French>
+	</Key>
+	<Key ID="STR_SDF_CANCEL">
+		<English>CANCEL</English>
+		<French>ANNULER</French>
+	</Key>
+</Project>

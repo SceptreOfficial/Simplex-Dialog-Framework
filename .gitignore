@@ -1,0 +1,8 @@
+@*
+*.exe
+*.zip
+*.pbo
+*.biprivatekey
+*.bat
+Thumbs.db
+desktop.ini

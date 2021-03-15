@@ -1,0 +1,6 @@
+#include "sdf\gui.hpp"
+
+class CfgFunctions {
+	#include "sdf\functions.hpp"
+};
+
