@@ -7,3 +7,7 @@ GVAR(profileRGBA) = [
 	profilenamespace getvariable ['GUI_BCG_RGB_B',0.08],
 	profilenamespace getvariable ['GUI_BCG_RGB_A',1]
 ];
+
+// Initialize caches
+GVAR(listCache) = [] call CBA_fnc_createNamespace;
+GVAR(gridCache) = [] call CBA_fnc_createNamespace;

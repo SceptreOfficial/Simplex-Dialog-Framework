@@ -26,7 +26,7 @@
 	3: Custom arguments (Optional, default: []) <ANY>
 
 	Returns:
-	Dialog created <BOOL> 
+	Dialog created <BOOL>
 */
 disableSerialization;
 params [
@@ -37,10 +37,6 @@ params [
 ];
 
 if (!isNull (uiNamespace getVariable [QGVAR(parent),displayNull])) exitWith {false};
-
-if (isNil QGVAR(gridCache)) then {
-	GVAR(gridCache) = [] call CBA_fnc_createNamespace;
-};
 
 GVAR(cache) = GVAR(gridCache);
 

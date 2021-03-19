@@ -25,7 +25,7 @@
 	3: Custom arguments (Optional, default: []) <ANY>
 
 	Returns:
-	Dialog created <BOOL> 
+	Dialog created <BOOL>
 */
 disableSerialization;
 params [
@@ -36,10 +36,6 @@ params [
 ];
 
 if (!isNull (uiNamespace getVariable [QGVAR(parent),displayNull])) exitWith {false};
-
-if (isNil QGVAR(listCache)) then {
-	GVAR(listCache) = [] call CBA_fnc_createNamespace;
-};
 
 GVAR(cache) = GVAR(listCache);
 
@@ -131,7 +127,7 @@ GVAR(keyDownEHID) = [_display,"KeyDown",{
 	if (_key == DIK_ESCAPE) then {[uiNamespace getVariable (onCancel),false] call FUNC(close)};
 	if (!isNull findDisplay IDD_RSCDISPLAYCURATOR && visibleMap) exitWith {
 		private _ctrl = uiNamespace getVariable [QGVAR(editFocus),controlNull];
-		
+
 		if (isNull _ctrl) exitWith {true};
 
 		if (_key == DIK_HOME) then {_ctrl ctrlSetTextSelection [0,0]};
@@ -147,13 +143,13 @@ GVAR(keyDownEHID) = [_display,"KeyDown",{
 				_ctrl ctrlSetText toString _text;
 				_ctrl ctrlSetTextSelection [_start,0];
 			};
-			
+
 			if (_key == DIK_BACKSPACE) then {
 				_text deleteAt (_start - 1);
 				_ctrl ctrlSetText toString _text;
 				_ctrl ctrlSetTextSelection [_start - 1,0];
 			};
-			
+
 			if (_key == DIK_DELETE) then {
 				_text deleteAt _start;
 				_ctrl ctrlSetText toString _text;
