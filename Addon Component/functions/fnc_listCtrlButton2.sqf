@@ -29,7 +29,7 @@ _ctrl ctrlSetTooltip _descriptionTooltip1;
 private _ctrl2 = _display ctrlCreate [QGVAR(ButtonSimple),-1,_ctrlGroup];
 _ctrl2 ctrlSetPosition [BUTTON2_W + (SPACING_W / 2),_posY,BUTTON2_W,BUTTON_H];
 _ctrl2 ctrlCommit 0;
-_ctrl ctrlSetText _descriptionText2;
+_ctrl2 ctrlSetText _descriptionText2;
 _ctrl2 ctrlSetTooltip _descriptionTooltip2;
 
 _ctrl setVariable [QGVAR(parameters),[_type,_description,[]]];
