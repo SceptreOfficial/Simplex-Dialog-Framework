@@ -80,7 +80,6 @@ if (_format isEqualTo 0) then {
 			case "MAP1" : {0 call FUNC(gridCtrlMap)};
 			case "MAP2" : {1 call FUNC(gridCtrlMap)};
 			case "MAP3" : {2 call FUNC(gridCtrlMap)};
-			case "MAP4" : {3 call FUNC(gridCtrlMap)};
 			case "GROUP" : FUNC(gridCtrlGroup);
 		};
 	} else {
