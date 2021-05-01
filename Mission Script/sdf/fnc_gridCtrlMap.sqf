@@ -10,6 +10,7 @@ _position = [_position # 0 + _posX,_position # 1 + _posY,_position # 2,_position
 _ctrl ctrlSetPosition _position;
 _ctrl ctrlCommit 0;
 
+// Mode/init type
 private _target = getPos player;
 private _value = switch _initType do {
 	case 0 : {
@@ -45,7 +46,7 @@ private _value = switch _initType do {
 		_marker setMarkerShapeLocal (["ELLIPSE","RECTANGLE"] select (_area # 4));
 		_marker setMarkerSizeLocal [_area # 1,_area # 2];
 		_marker setMarkerDirLocal (_area # 3);
-		_marker setMarkerTypeLocal _brush;
+		_marker setMarkerBrushLocal _brush;
 		_marker setMarkerColorLocal _color;
 		_area
 	};
@@ -71,18 +72,20 @@ _ctrl setVariable [QGVAR(initType),_initType];
 
 _controls pushBack _ctrl;
 
-[_ctrl,"MouseButtonDblClick",{
-	params ["_ctrl","_button","_xPos","_yPos","_shiftKey","_ctrlKey","_altKey"];
-
-	if (_button != 0 || _ctrl getVariable QGVAR(initType) != 1) exitWith {};
+// Change area shape
+[_ctrl,"KeyDown",{
+	params ["_ctrl","_key"];
+	
+	if (_ctrl getVariable QGVAR(initType) != 1 || _key != DIK_LALT) exitWith {};
 
 	private _value = _ctrl getVariable QGVAR(value);
 	_value set [4,!(_value # 4)];
-	_mapCtrl setVariable [QGVAR(Svalue),_value];
+	_mapCtrl setVariable [QGVAR(value),_value];
 
 	QGVAR(mapMarker) setMarkerShapeLocal (["ELLIPSE","RECTANGLE"] select (_value # 4));
 }] call CBA_fnc_addBISEventHandler;
 
+// Value updating
 [_ctrl,"MouseButtonDown",{
 	params ["_ctrl","_button","_xPos","_yPos","_shiftKey","_ctrlKey","_altKey"];
 
@@ -101,7 +104,7 @@ _controls pushBack _ctrl;
 			_ctrl setVariable [QGVAR(down),true];
 			_ctrl setVariable [QGVAR(shiftDown),_shiftKey];
 			_ctrl setVariable [QGVAR(ctrlDown),_ctrlKey];
-			_ctrl setVariable [QGVAR(altDown),_altKey];
+			_ctrl setVariable [QGVAR(inArea),_pos inArea (_ctrl getVariable QGVAR(value))]
 		};
 		case 2 : {
 			[[_pos,_shiftKey,_ctrlKey,_altKey],uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
@@ -109,6 +112,7 @@ _controls pushBack _ctrl;
 	};
 }] call CBA_fnc_addBISEventHandler;
 
+// Area control functionality
 [_ctrl,"MouseMoving",{
 	params ["_ctrl"];
 
@@ -118,8 +122,6 @@ _controls pushBack _ctrl;
 	private _current = _ctrl ctrlMapScreenToWorld getMousePosition;
 	private _value = _ctrl getVariable QGVAR(value);
 	private _isRectangle = _value # 4;
-
-	QGVAR(mapMarker) setMarkerShapeLocal (["ELLIPSE","RECTANGLE"] select _isRectangle);
 
 	// Rotation
 	if (_ctrl getVariable [QGVAR(shiftDown),false]) exitWith {
@@ -132,22 +134,21 @@ _controls pushBack _ctrl;
 		[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 	};
 
-	// Center creation
+	// Symmetrical creation
 	if (_ctrl getVariable [QGVAR(ctrlDown),false]) exitWith {
-		private _width = abs (_current # 0 - _start # 0);
-		private _height = abs (_current # 1 - _start # 1);
+		private _length = abs (_current # 0 - _start # 0) max abs (_current # 1 - _start # 1);
 
-		QGVAR(mapMarker) setMarkerSizeLocal [_width,_height];
+		QGVAR(mapMarker) setMarkerSizeLocal [_length,_length];
 		QGVAR(mapMarker) setMarkerPosLocal _start;
 		QGVAR(mapMarker) setMarkerDir 0;
 
-		_ctrl setVariable [QGVAR(value),[_start,_width,_height,0,_isRectangle]];
+		_ctrl setVariable [QGVAR(value),[_start,_length,_length,0,_isRectangle]];
 
-		[[_center,_width,_height,0,_isRectangle],uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
+		[[_start,_length,_length,0,_isRectangle],uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 	};
 
 	// Movement
-	if (_ctrl getVariable [QGVAR(altDown),false]) exitWith {
+	if (_ctrl getVariable [QGVAR(inArea),false]) exitWith {
 		private _center = (_value # 0) vectorAdd (_start vectorDiff _current);
 		QGVAR(mapMarker) setMarkerPosLocal _current;
 
