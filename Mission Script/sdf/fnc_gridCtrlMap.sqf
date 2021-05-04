@@ -104,7 +104,8 @@ _controls pushBack _ctrl;
 			_ctrl setVariable [QGVAR(down),true];
 			_ctrl setVariable [QGVAR(shiftDown),_shiftKey];
 			_ctrl setVariable [QGVAR(ctrlDown),_ctrlKey];
-			_ctrl setVariable [QGVAR(inArea),_pos inArea (_ctrl getVariable QGVAR(value))]
+			_ctrl setVariable [QGVAR(inArea),_pos inArea (_ctrl getVariable QGVAR(value))];
+			_ctrl setVariable [QGVAR(startCenter),(_ctrl getVariable QGVAR(value)) # 0];
 		};
 		case 2 : {
 			[[_pos,_shiftKey,_ctrlKey,_altKey],uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
@@ -149,10 +150,10 @@ _controls pushBack _ctrl;
 
 	// Movement
 	if (_ctrl getVariable [QGVAR(inArea),false]) exitWith {
-		private _center = (_value # 0) vectorAdd (_start vectorDiff _current);
-		QGVAR(mapMarker) setMarkerPosLocal _current;
+		private _center = (_ctrl getVariable QGVAR(startCenter)) vectorAdd (_current vectorDiff _start);
+		QGVAR(mapMarker) setMarkerPosLocal _center;
 
-		_value set [0,_current];
+		_value set [0,_center];
 		_ctrl setVariable [QGVAR(value),_value];
 
 		[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
