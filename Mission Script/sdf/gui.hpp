@@ -84,6 +84,10 @@ class GVAR(Editbox) : RscEdit {
 	colorDisabled[] = {COLOR_DISABLED};
 };
 
+class GVAR(EditboxMulti) : GVAR(Editbox) {
+	style = 16;
+};
+
 class GVAR(Slider) : RscXSliderH {
 	idc = -1;
 	deletable = 1;

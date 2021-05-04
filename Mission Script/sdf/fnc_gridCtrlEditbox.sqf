@@ -1,12 +1,18 @@
 #include "script_component.hpp"
 
+params [["_multiline",false,[false]]];
 _valueData params [["_string","",[""]]];
 
 if (!_forceDefault) then {
 	_string = GVAR(cache) getVariable [["",_description,_type] joinString "~",_string];
 };
 
-private _ctrl = _display ctrlCreate [QGVAR(Editbox),-1,_ctrlGroup];
+private _ctrl = if (_multiline) then {
+	_display ctrlCreate [QGVAR(EditboxMulti),-1,_ctrlGroup];
+} else {
+	_display ctrlCreate [QGVAR(Editbox),-1,_ctrlGroup];
+};
+
 _ctrl ctrlSetPosition _position;
 _ctrl ctrlSetText _string;
 _ctrl ctrlCommit 0;

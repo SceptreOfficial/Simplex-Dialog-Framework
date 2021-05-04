@@ -23,7 +23,7 @@ if (_format isEqualTo 0) then {
 
 	switch _type do {
 		case "CHECKBOX" : FUNC(listCtrlCheckbox);
-		case "EDITBOX" : FUNC(listCtrlEditbox);
+		case "EDITBOX" : {false call FUNC(listCtrlEditbox)};
 		case "SLIDER" : FUNC(listCtrlSlider);
 		case "COMBOBOX" : FUNC(listCtrlCombobox);
 		case "LISTNBOX" : FUNC(listCtrlListNBox);
@@ -68,7 +68,8 @@ if (_format isEqualTo 0) then {
 			case "TEXT" : {false call FUNC(gridCtrlText)};
 			case "STRUCTUREDTEXT" : {true call FUNC(gridCtrlText)};
 			case "CHECKBOX" : FUNC(gridCtrlCheckbox);
-			case "EDITBOX" : FUNC(gridCtrlEditbox);
+			case "EDITBOX" : {false call FUNC(gridCtrlEditbox)};
+			case "EDITBOXMULTI" : {true call FUNC(gridCtrlEditbox)};
 			case "SLIDER" : FUNC(gridCtrlSlider);
 			case "COMBOBOX" : FUNC(gridCtrlCombobox);
 			case "LISTNBOX" : FUNC(gridCtrlListNBox);
@@ -87,7 +88,8 @@ if (_format isEqualTo 0) then {
 			case "TEXT" : {false call FUNC(gridCtrlText)};
 			case "STRUCTUREDTEXT" : {true call FUNC(gridCtrlText)};
 			case "CHECKBOX" : FUNC(gridCtrlCheckbox);
-			case "EDITBOX" : FUNC(gridCtrlEditbox);
+			case "EDITBOX" : {false call FUNC(gridCtrlEditbox)};
+			case "EDITBOXMULTI" : {true call FUNC(gridCtrlEditbox)};
 			case "SLIDER" : FUNC(gridCtrlSlider);
 			case "COMBOBOX" : FUNC(gridCtrlCombobox);
 			case "LISTNBOX" : FUNC(gridCtrlListNBox);
