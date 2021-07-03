@@ -19,7 +19,7 @@
 ]
 */
 
-_valueData params [["_tree",[],[[]]],["_returnPath",false,[false]]];
+_valueData params [["_tree",[],[[]]],["_returnPath",false,[false]],["_doubleClick",{},[{}]]];
 
 private _ctrl = _display ctrlCreate [QGVAR(Tree),-1,_ctrlGroup];
 _ctrl ctrlSetPosition _position;
@@ -60,3 +60,14 @@ _controls pushBack _ctrl;
 
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
+
+[_ctrl,"TreeDblClick",{
+	params ["_ctrl"];
+	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call _thisArgs;
+},_doubleClick] call CBA_fnc_addBISEventHandler;
+
+[_ctrl,"KeyDown",{
+	params ["_ctrl","_key"];
+	if !(_key in [DIK_RETURN,DIK_NUMPADENTER]) exitWith {};
+	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call _thisArgs;
+},_doubleClick] call CBA_fnc_addBISEventHandler;
