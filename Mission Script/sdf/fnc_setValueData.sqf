@@ -190,9 +190,9 @@ switch (_type) do {
 
 	case "TREE" : {
 		private _paramsArray = if (GVAR(cache) == GVAR(gridCache)) then {
-			[["_tree",[],[[]]],["_returnPath",false,[false]]]
+			[["_tree",[],[[]]],["_returnPath",false,[false]],["_doubleClick",{},[{}]]]
 		} else {
-			[["_tree",[],[[]]],["_height",4,[0]],["_returnPath",false,[false]]]
+			[["_tree",[],[[]]],["_height",4,[0]],["_returnPath",false,[false]],["_doubleClick",{},[{}]]]
 		};
 
 		_valueData params _paramsArray;
