@@ -5,6 +5,6 @@ class CfgFunctions {
 };
 
 class Extended_PreInit_EventHandlers {
-	sdf_preInit = "call compileScript ['ssf\XEH_preInit.sqf']";
+	sdf_preInit = "call compileScript ['sdf\XEH_preInit.sqf']";
 };
 
