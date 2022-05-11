@@ -1,6 +1,4 @@
 #include "script_component.hpp"
-ADDON = false;
-#include "XEH_PREP.hpp"
 
 // Make profile background colors easy to access
 GVAR(profileRGBA) = [
@@ -20,5 +18,3 @@ GVAR(listCache) = [] call CBA_fnc_createNamespace;
 GVAR(gridCache) = [] call CBA_fnc_createNamespace;
 
 GVAR(skipOnValueChanged) = false;
-
-ADDON = true;
