@@ -1,5 +1,9 @@
 #include "script_component.hpp"
 
-params [["_index",0,[0]]];
+params [["_ctrl",0,[0,controlNull]]];
 
-((uiNamespace getVariable QGVAR(controls)) # _index) getVariable QGVAR(value)
+if (_ctrl isEqualType 0) then {
+	_ctrl = (uiNamespace getVariable QGVAR(controls)) # _ctrl;
+};
+
+_ctrl getVariable QGVAR(value)

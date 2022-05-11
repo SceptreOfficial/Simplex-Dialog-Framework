@@ -28,6 +28,8 @@ _controls pushBack _ctrl;
 
 	_ctrl setVariable [QGVAR(value),_bool];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_bool,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

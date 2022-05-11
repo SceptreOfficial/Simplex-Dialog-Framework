@@ -17,7 +17,9 @@ if (_show) then {
 			_ctrlEdit ctrlCommit 0;
 			_ctrlEdit ctrlShow true;
 		};
-		case "LISTNBOX" : {
+		case "LISTNBOX";
+		case "LISTNBOXCB";
+		case "LISTNBOXMULTI" : {
 			private _ctrlBG = _ctrl getVariable QGVAR(ctrlBG);
 			_ctrlBG ctrlSetPosition (_ctrl getVariable QGVAR(position));
 			_ctrlBG ctrlCommit 0;
@@ -36,7 +38,9 @@ if (_show) then {
 			_ctrlEdit ctrlSetPosition [0,0,0,0];
 			_ctrlEdit ctrlCommit 0;
 		};
-		case "LISTNBOX" : {
+		case "LISTNBOX";
+		case "LISTNBOXCB";
+		case "LISTNBOXMULTI" : {
 			private _ctrlBG = _ctrl getVariable QGVAR(ctrlBG);
 			_ctrlBG ctrlShow false;
 			_ctrlBG ctrlSetPosition [0,0,0,0];

@@ -7,6 +7,9 @@ if (_code isEqualType "") then {
 	_code = compile _code;
 };
 
+parsingNamespace setVariable [QGVAR(buttonTextLeft),0];
+parsingNamespace setVariable [QGVAR(buttonTextTop),0];
+
 private _ctrl = _display ctrlCreate [QGVAR(Button),-1,_ctrlGroup];
 _ctrl ctrlSetPosition _position;
 

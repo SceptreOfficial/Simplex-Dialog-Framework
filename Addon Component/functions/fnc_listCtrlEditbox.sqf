@@ -1,6 +1,10 @@
 #include "script_component.hpp"
 
-_valueData params [["_string","",[""]]];
+_valueData params [["_string",""]];
+
+if !(_string isEqualType "") then {
+	_string = str _string;
+};
 
 CREATE_DESCRIPTION;
 
@@ -28,6 +32,8 @@ _controls pushBack _ctrl;
 	
 	_ctrl setVariable [QGVAR(value),_string];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_string,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

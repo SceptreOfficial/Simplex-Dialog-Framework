@@ -12,9 +12,14 @@
 #include "\a3\ui_f\hpp\definedikcodes.inc"
 #include "\a3\ui_f_curator\ui\defineresincldesign.inc"
 
+// Preferences
+#define PROFILE_COLORS_R profilenamespace getvariable ['GUI_BCG_RGB_R',0.77]
+#define PROFILE_COLORS_G profilenamespace getvariable ['GUI_BCG_RGB_G',0.51]
+#define PROFILE_COLORS_B profilenamespace getvariable ['GUI_BCG_RGB_B',0.08]
+
 // Macros
-#define GRID_W(N) (pixelW * pixelGridNoUIScale * N * 1.3)
-#define GRID_H(N) (pixelH * pixelGridNoUIScale * N * 1.3)
+#define GRID_W(N) (pixelW * pixelGridNoUIScale * N)
+#define GRID_H(N) (pixelH * pixelGridNoUIScale * N)
 #define GD_W(N) GRID_W(N * 1.5)
 #define GD_H(N) GRID_H(N * 1.5)
 #define COLOR_DISABLED 1,1,1,0.35
@@ -23,7 +28,7 @@
 #define BUFFER_W GRID_W(0.2)
 #define BUFFER_H GRID_H(0.2)
 #define MIN_H GRID_H(1.3)
-#define MAX_H GRID_H(21)
+#define MAX_H GRID_H(25)
 #define CONTENT_W GRID_W(30)
 #define ITEM_H GRID_H(1.3)
 #define DESCRIPTION_W GRID_W(12)

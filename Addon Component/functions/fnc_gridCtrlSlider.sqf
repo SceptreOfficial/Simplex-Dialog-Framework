@@ -35,7 +35,7 @@ _controls pushBack _ctrl;
 
 [_ctrl,"SliderPosChanged",{
 	params ["_ctrl","_sliderPos"];
-
+	
 	((_ctrl getVariable QGVAR(parameters)) # 2 # 0) params ["_min","_max","_decimals"];
 
 	private _sliderPosStr = _sliderPos toFixed _decimals;
@@ -45,6 +45,8 @@ _controls pushBack _ctrl;
 	_ctrlEdit ctrlSetText _sliderPosStr;
 
 	_ctrl setVariable [QGVAR(value),_sliderPos];
+
+	if (GVAR(skipOnValueChanged)) exitWith {};
 
 	[_sliderPos,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
@@ -62,6 +64,8 @@ _controls pushBack _ctrl;
 
 	_ctrl setVariable [QGVAR(value),_value];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

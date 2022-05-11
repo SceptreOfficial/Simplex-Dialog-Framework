@@ -26,20 +26,33 @@ private _ctrl = _display ctrlCreate [QGVAR(ListNBox),-1,_ctrlGroup];
 _ctrl ctrlSetPosition [0,_posY + ITEM_H + SPACING_H,LISTNBOX_W,_height];
 _ctrl ctrlCommit 0;
 
+private _columnsCount = 3;
+
 {
 	if !(_x isEqualType []) then {_x = [_x]};
 
 	private _columns = _x apply {
-		_x params [["_text",""],["_icon","",[""]],["_RGBA",[1,1,1,1],[[]],4]];
+		_x params [["_text",""],["_tooltip","",[""]],["_icon",["",[1,1,1,1]],["",[]],2],["_RGBA",[1,1,1,1],[[]],4]];
 		if !(_text isEqualType "") then {_text = str _text};
-		[_text,_icon,_RGBA]
+		if (_icon isEqualType "") then {_icon = [_icon,[1,1,1,1]]};
+		[_text,_tooltip,_icon,_RGBA]
+	};
+
+	if (count _columns > _columnsCount) then {
+		_columnsCount = _columnsCount max (count _columns);
+		private _columnsPos = [];
+		_columnsPos resize _columnsCount;
+		{_columnsPos set [_forEachIndex,1/_columnsCount*_forEachIndex]} forEach +_columnsPos;
+		_ctrl lnbSetColumnsPos _columnsPos;
 	};
 
 	private _index = _ctrl lnbAddRow (_columns apply {_x # 0});
 
 	{
-		_ctrl lnbSetPicture [[_index,_forEachIndex],_x # 1];
-		_ctrl lnbSetColor [[_index,_forEachIndex],_x # 2];
+		_ctrl lnbSetTooltip [[_index,_forEachIndex],_x # 1];
+		_ctrl lnbSetPicture [[_index,_forEachIndex],_x # 2 # 0];
+		_ctrl lnbSetPictureColor [[_index,_forEachIndex],_x # 2 # 1];
+		_ctrl lnbSetColor [[_index,_forEachIndex],_x # 3];
 	} forEach _columns;
 } forEach _rows;
 
@@ -49,6 +62,7 @@ _ctrl setVariable [QGVAR(enableCondition),_enableCondition];
 _ctrl setVariable [QGVAR(ctrlBG),_ctrlBG];
 _ctrl setVariable [QGVAR(returnData),_returnData];
 _ctrl setVariable [QGVAR(selection),_selection];
+_ctrl setVariable [QGVAR(doubleClick),_doubleClick];
 
 if (_returnData isEqualTo []) then {
 	_ctrl setVariable [QGVAR(value),_selection];
@@ -68,18 +82,20 @@ _controls pushBack _ctrl;
 	_ctrl setVariable [QGVAR(selection),_selection];
 	_ctrl setVariable [QGVAR(value),_value];
 	
+	if (GVAR(skipOnValueChanged)) exitWith {};
+
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 
 [_ctrl,"LBDblClick",{
 	params ["_ctrl"];
-	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call _thisArgs;
-},_doubleClick] call CBA_fnc_addBISEventHandler;
+	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(doubleClick));
+}] call CBA_fnc_addBISEventHandler;
 
 [_ctrl,"KeyDown",{
 	params ["_ctrl","_key"];
 	if !(_key in [DIK_RETURN,DIK_NUMPADENTER]) exitWith {};
-	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call _thisArgs;
-},_doubleClick] call CBA_fnc_addBISEventHandler;
+	[_ctrl getVariable QGVAR(value),uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(doubleClick));
+}] call CBA_fnc_addBISEventHandler;
 
 _posY = _posY + ITEM_H + SPACING_H + _height + SPACING_H;

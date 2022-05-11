@@ -58,6 +58,8 @@ _controls pushBack _ctrl;
 	private _value = [_ctrl tvData _selectionPath,_selectionPath] select (_ctrl getVariable QGVAR(returnPath));
 	_ctrl setVariable [QGVAR(value),_value];	
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

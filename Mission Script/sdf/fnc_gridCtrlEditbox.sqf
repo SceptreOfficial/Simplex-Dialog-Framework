@@ -1,7 +1,11 @@
 #include "script_component.hpp"
 
 params [["_multiline",false,[false]]];
-_valueData params [["_string","",[""]]];
+_valueData params [["_string",""],["_tooltip","",[""]]];
+
+if !(_string isEqualType "") then {
+	_string = str _string;
+};
 
 if (!_forceDefault) then {
 	_string = GVAR(cache) getVariable [["",_description,_type] joinString "~",_string];
@@ -15,6 +19,7 @@ private _ctrl = if (_multiline) then {
 
 _ctrl ctrlSetPosition _position;
 _ctrl ctrlSetText _string;
+_ctrl ctrlSetTooltip _tooltip;
 _ctrl ctrlCommit 0;
 
 _ctrl setVariable [QGVAR(parameters),[_type,_description,_string]];
@@ -32,6 +37,8 @@ _controls pushBack _ctrl;
 	
 	_ctrl setVariable [QGVAR(value),_string];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_string,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

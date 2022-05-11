@@ -3,7 +3,7 @@
 params [["_structuredText",false,[false]]];
 
 if (_valueData isEqualTo []) then {
-	_valueData = [0,0,0,0.7];
+	_valueData = [0,0,0,0.6];
 };
 
 private _ctrl = if (_structuredText) then {

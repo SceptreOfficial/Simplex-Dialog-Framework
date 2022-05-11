@@ -6,7 +6,7 @@ if (_format isEqualTo 0) then {
 	_control params [
 		["_type","",[""]],
 		["_description","",["",[]]],
-		["_valueData",[],[true,"",[],{}]],
+		["_valueData",[]],
 		["_forceDefault",true,[true]],
 		["_onValueChanged",{},[{}]],
 		["_enableCondition",{true},[{},true]]
@@ -23,10 +23,13 @@ if (_format isEqualTo 0) then {
 
 	switch _type do {
 		case "CHECKBOX" : FUNC(listCtrlCheckbox);
-		case "EDITBOX" : {false call FUNC(listCtrlEditbox)};
+		case "EDITBOX" : FUNC(listCtrlEditbox);
+		case "ARRAY" : FUNC(listCtrlArray);
 		case "SLIDER" : FUNC(listCtrlSlider);
 		case "COMBOBOX" : FUNC(listCtrlCombobox);
 		case "LISTNBOX" : FUNC(listCtrlListNBox);
+		case "LISTNBOXCB" : FUNC(listCtrlListNBoxCB);
+		case "LISTNBOXMULTI" : FUNC(listCtrlListNBoxMulti);
 		case "BUTTON";
 		case "BUTTON1" : FUNC(listCtrlButton);
 		case "BUTTON2" : FUNC(listCtrlButton2);
@@ -34,13 +37,14 @@ if (_format isEqualTo 0) then {
 		case "CARGOBOX";
 		case "CARGOBOX1" : FUNC(listCtrlCargobox);
 		case "CARGOBOX2" : FUNC(listCtrlCargobox2);
+		case "TOOLBOX" : FUNC(listCtrlToolbox);
 	};
 } else {
 	_control params [
 		["_position",[0,0,1,1],[[]],4],
 		["_type","",[""]],
 		["_description","",["",[]]],
-		["_valueData",[],[true,"",[],{}]],
+		["_valueData",[]],
 		["_forceDefault",true,[true]],
 		["_onValueChanged",{},[{}]],
 		["_enableCondition",{true},[{},true]]
@@ -73,15 +77,19 @@ if (_format isEqualTo 0) then {
 			case "SLIDER" : FUNC(gridCtrlSlider);
 			case "COMBOBOX" : FUNC(gridCtrlCombobox);
 			case "LISTNBOX" : FUNC(gridCtrlListNBox);
+			case "LISTNBOXCB" : FUNC(gridCtrlListNBoxCB);
+			case "LISTNBOXMULTI" : FUNC(gridCtrlListNBoxMulti);
 			case "BUTTON";
 			case "BUTTON1" : {true call FUNC(gridCtrlButton)};
 			case "BUTTON2" : {false call FUNC(gridCtrlButton)};
 			case "TREE" : FUNC(gridCtrlTree);
-			case "MAP";
-			case "MAP1" : {0 call FUNC(gridCtrlMap)};
-			case "MAP2" : {1 call FUNC(gridCtrlMap)};
-			case "MAP3" : {2 call FUNC(gridCtrlMap)};
+			case "TOOLBOX" : FUNC(gridCtrlToolbox);
+			case "MAP" : FUNC(gridCtrlMap);
+			//case "MAP1" : {0 call FUNC(gridCtrlMap)};
+			//case "MAP2" : {1 call FUNC(gridCtrlMap)};
+			//case "MAP3" : {2 call FUNC(gridCtrlMap)};
 			case "GROUP" : FUNC(gridCtrlGroup);
+			
 		};
 	} else {
 		switch _type do {
@@ -93,10 +101,13 @@ if (_format isEqualTo 0) then {
 			case "SLIDER" : FUNC(gridCtrlSlider);
 			case "COMBOBOX" : FUNC(gridCtrlCombobox);
 			case "LISTNBOX" : FUNC(gridCtrlListNBox);
+			case "LISTNBOXCB" : FUNC(gridCtrlListNBoxCB);
+			case "LISTNBOXMULTI" : FUNC(gridCtrlListNBoxMulti);
 			case "BUTTON";
 			case "BUTTON1" : {true call FUNC(gridCtrlButton)};
 			case "BUTTON2" : {false call FUNC(gridCtrlButton)};
 			case "TREE" : FUNC(gridCtrlTree);
+			case "TOOLBOX" : FUNC(gridCtrlToolbox);
 		};
 	};
 };

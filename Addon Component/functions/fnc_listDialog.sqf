@@ -37,6 +37,7 @@ params [
 
 if (!isNull (uiNamespace getVariable [QGVAR(parent),displayNull])) exitWith {false};
 
+GVAR(exit) = false;
 GVAR(cache) = GVAR(listCache);
 
 _onClose params [["_onConfirm",{},[{}]],["_onCancel",{},[{}]]];
@@ -91,7 +92,12 @@ _dummy ctrlCommit 0;
 uiNamespace setVariable [QGVAR(controls),_controls];
 
 // Init all onValueChanged functions
-{[_x getVariable QGVAR(value),_arguments,_x] call (_x getVariable QGVAR(onValueChanged))} forEach _controls;
+{
+	if (GVAR(skipOnValueChanged)) then {continue};
+	[_x getVariable QGVAR(value),_arguments,_x] call (_x getVariable QGVAR(onValueChanged))
+} forEach _controls;
+
+if (GVAR(exit)) exitWith {};
 
 // Handle enable conditions
 GVAR(PFHID) = [FUNC(enablePFH),0,_parent] call CBA_fnc_addPerFrameHandler;
@@ -119,10 +125,18 @@ _ctrlConfirm ctrlCommit 0;
 _ctrlTitle ctrlSetText _title;
 ctrlSetFocus _ctrlConfirm;
 
-// Handle ESC key
+// Handle key presses
+GVAR(shiftKey) = false;
+
+GVAR(keyUpEHID) = [_display,"KeyUp",{
+	private _key = _this # 1;
+	if (_key in [DIK_LSHIFT,DIK_RSHIFT]) then {GVAR(shiftKey) = false};
+}] call CBA_fnc_addBISEventHandler;
+
 GVAR(keyDownEHID) = [_display,"KeyDown",{
 	private _key = _this # 1;
 
+	if (_key in [DIK_LSHIFT,DIK_RSHIFT]) then {GVAR(shiftKey) = true};
 	if (_key in [DIK_UP,DIK_DOWN,DIK_LEFT,DIK_RIGHT]) exitWith {false};
 	if (_key == DIK_ESCAPE) then {[uiNamespace getVariable (onCancel),false] call FUNC(close)};
 	if (!isNull findDisplay IDD_RSCDISPLAYCURATOR && visibleMap) exitWith {
@@ -161,5 +175,7 @@ GVAR(keyDownEHID) = [_display,"KeyDown",{
 
 	false
 }] call CBA_fnc_addBISEventHandler;
+
+[CBA_fnc_localEvent,[QGVAR(opened),[_title,_content,_onClose,_arguments]]] call CBA_fnc_execNextFrame;
 
 true

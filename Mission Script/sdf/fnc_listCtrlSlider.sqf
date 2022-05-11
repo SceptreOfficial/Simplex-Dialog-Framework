@@ -45,6 +45,8 @@ _controls pushBack _ctrl;
 
 	_ctrl setVariable [QGVAR(value),_sliderPos];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+
 	[_sliderPos,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 
@@ -61,6 +63,8 @@ _controls pushBack _ctrl;
 
 	_ctrl setVariable [QGVAR(value),_value];
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+		
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 }] call CBA_fnc_addBISEventHandler;
 

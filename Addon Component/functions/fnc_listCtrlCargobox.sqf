@@ -113,6 +113,8 @@ private _fnc_add = {
 
 	_ctrlCargo lbSetCurSel _index;
 
+	if (GVAR(skipOnValueChanged)) exitWith {};
+
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 };
 
@@ -136,6 +138,8 @@ private _fnc_remove = {
 	_ctrl setVariable [QGVAR(value),_value];
 
 	_ctrlCargo lbDelete _selection;
+
+	if (GVAR(skipOnValueChanged)) exitWith {};
 
 	[_value,uiNamespace getVariable QGVAR(arguments),_ctrl] call (_ctrl getVariable QGVAR(onValueChanged));
 };

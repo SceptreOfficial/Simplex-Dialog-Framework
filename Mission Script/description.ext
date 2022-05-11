@@ -4,3 +4,7 @@ class CfgFunctions {
 	#include "sdf\functions.hpp"
 };
 
+class Extended_PreInit_EventHandlers {
+	sdf_preInit = "call compileScript ['ssf\XEH_preInit.sqf']";
+};
+
